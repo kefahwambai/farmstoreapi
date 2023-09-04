@@ -1,0 +1,18 @@
+databases:
+  - name: Farmarket
+    databaseName: farmarket
+    user: farmarket_user
+
+services:
+  - type: web
+    name: farmarket
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: farmarket
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
